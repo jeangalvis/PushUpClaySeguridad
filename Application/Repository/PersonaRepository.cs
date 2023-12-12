@@ -37,4 +37,49 @@ public class PersonaRepository : GenericRepository<Persona>, IPersona
                                  .ToListAsync();
         return (totalRegistros, registros);
     }
+
+    public async Task<IEnumerable<Persona>> ObtenerTodosLosEmpleados(){
+        return await _context.Personas
+                                    .Include(p => p.TipoPersona)
+                                    .Where(p => p.TipoPersona.Descripcion.ToLower() == "empleado")
+                                    .ToListAsync();
+    }
+
+    public async Task<IEnumerable<Persona>> ObtenerEmpleadosVigilantes(){
+                return await _context.Personas
+                                    .Include(p => p.TipoPersona)
+                                    .Include(p => p.CategoriaPersona)
+                                    .Where(p => p.TipoPersona.Descripcion.ToLower() == "empleado" && p.CategoriaPersona.NombreCat.ToLower() == "vigilante")
+                                    .ToListAsync();
+    }
+    public async Task<IEnumerable<Persona>> ObtenerNumeroContactoVigilante(){
+        return await _context.Personas
+                                .Include(p => p.TipoPersona)
+                                .Include(p => p.CategoriaPersona)
+                                .Include(p => p.ContactoPersonas)
+                                .Where(p => p.TipoPersona.Descripcion.ToLower() == "empleado" && p.CategoriaPersona.NombreCat.ToLower() == "vigilante" && p.ContactoPersonas.Any(p => p.IdPersonafk == p.Id))
+                                .ToListAsync();
+    }
+
+    public async Task<IEnumerable<Persona>> ObtenerClientesBucaramanga(){
+        return await _context.Personas
+                                    .Include(p => p.TipoPersona)
+                                    .Include(p => p.Ciudad)
+                                    .Where(p => p.TipoPersona.Descripcion.ToLower() == "cliente" && p.Ciudad.NombreCiudad.ToLower() == "bucaramanga")
+                                    .ToListAsync();
+    }
+    public async Task<IEnumerable<Persona>> ObtenerEmpleadosGironPiedecuesta(){
+        return await _context.Personas
+                                .Include(p => p.TipoPersona)
+                                .Include(p => p.DireccionPersonas)
+                                .Where(p => p.TipoPersona.Descripcion.ToLower() == "empleado" && p.DireccionPersonas.Any(p => p.Direccion.ToLower().Contains("giron") || p.Direccion.ToLower().Contains("piedecuesta")))
+                                .ToListAsync();
+    }
+    public async Task<IEnumerable<Persona>> ObtenerClientes5AnyosAntiguedad(){
+        DateTime fechaActual = DateTime.Now;
+        return await _context.Personas
+                                    .Include(p => p.Contratos)
+                                    .Where(p => p.Contratos.Any(p => (fechaActual.Year - p.FechaContrato.Year) > 5))
+                                    .ToListAsync();
+    }
 }

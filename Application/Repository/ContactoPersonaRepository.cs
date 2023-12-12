@@ -37,4 +37,5 @@ public class ContactoPersonaRepository : GenericRepository<ContactoPersona>, ICo
                                  .ToListAsync();
         return (totalRegistros, registros);
     }
+    
 }

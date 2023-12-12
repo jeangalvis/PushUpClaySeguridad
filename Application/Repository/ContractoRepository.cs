@@ -1,5 +1,6 @@
 using Domain.Entities;
 using Domain.Interfaces;
+using Domain.Views;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
@@ -36,5 +37,18 @@ public class ContratoRepository : GenericRepository<Contrato>, IContrato
                                  .Take(pageSize)
                                  .ToListAsync();
         return (totalRegistros, registros);
+    }
+    public async Task<IEnumerable<ContratosActivos>> ObtenerContratosActivos(){
+            return await _context.Contratos
+                                    .Include(p => p.Estado)
+                                    .Include(p => p.Persona)
+                                    .Where(p => p.Estado.Descripcion.ToLower() == "activo")
+                                    .Select(p => new ContratosActivos
+                                    {
+                                        Id = p.Id,
+                                        NombreCliente = p.Persona.Id == p.IdClientefk ? p.Persona.Nombre : string.Empty,
+                                        NombreEmpleado = p.Persona.Id == p.IdEmpleadofk ? p.Persona.Nombre : string.Empty,
+                                    })
+                                    .ToListAsync();
     }
 }

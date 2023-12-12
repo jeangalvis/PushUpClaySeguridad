@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using API.Dtos;
 using AutoMapper;
 using Domain.Entities;
+using Domain.Views;
 
 namespace API.Profiles
 {
@@ -27,6 +28,9 @@ namespace API.Profiles
             CreateMap<TipoDireccion,TipoDireccionDto>().ReverseMap();
             CreateMap<TipoPersona,TipoPersonaDto>().ReverseMap();
             CreateMap<Turno,TurnoDto>().ReverseMap();
+
+            CreateMap<Persona,PersonaxContactoDto>().ReverseMap();
+            CreateMap<ContratosActivos,ContratosActivosDto>().ReverseMap();
         }
     }
 }

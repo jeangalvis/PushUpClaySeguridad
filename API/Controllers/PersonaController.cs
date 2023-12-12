@@ -101,4 +101,59 @@ public class PersonaController : BaseApiController
         var lstResultDto = _mapper.Map<List<PersonaDto>>(result.registros);
         return new Pager<PersonaDto>(lstResultDto, result.totalRegistros, resultParams.PageIndex, resultParams.PageSize, resultParams.Search);
     }
+
+    [HttpGet("ObtenerTodosLosEmpleados")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<PersonaDto>>> Get2()
+    {
+        var results = await _unitOfWork.Personas
+                                    .ObtenerTodosLosEmpleados();
+        return _mapper.Map<List<PersonaDto>>(results);
+    }
+    [HttpGet("ObtenerEmpleadosVigilantes")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<PersonaDto>>> Get3()
+    {
+        var results = await _unitOfWork.Personas
+                                    .ObtenerEmpleadosVigilantes();
+        return _mapper.Map<List<PersonaDto>>(results);
+    }
+    [HttpGet("ObtenerNumeroContactoVigilante")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<PersonaxContactoDto>>> Get4()
+    {
+        var results = await _unitOfWork.Personas
+                                    .ObtenerNumeroContactoVigilante();
+        return _mapper.Map<List<PersonaxContactoDto>>(results);
+    }
+    [HttpGet("ObtenerClientesBucaramanga")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<PersonaDto>>> Get5()
+    {
+        var results = await _unitOfWork.Personas
+                                    .ObtenerClientesBucaramanga();
+        return _mapper.Map<List<PersonaDto>>(results);
+    }
+    [HttpGet("ObtenerEmpleadosGironPiedecuesta")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<PersonaDto>>> Get6()
+    {
+        var results = await _unitOfWork.Personas
+                                    .ObtenerEmpleadosGironPiedecuesta();
+        return _mapper.Map<List<PersonaDto>>(results);
+    }
+    [HttpGet("ObtenerClientes5AnyosAntiguedad")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<PersonaDto>>> Get7()
+    {
+        var results = await _unitOfWork.Personas
+                                    .ObtenerClientes5AnyosAntiguedad();
+        return _mapper.Map<List<PersonaDto>>(results);
+    }
 }
