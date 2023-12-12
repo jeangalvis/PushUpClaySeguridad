@@ -79,5 +79,5 @@ Body en formato JSON
 
 7. 
 ```
-/api/Persona/ObtenerClientes5AnyosAntiguedad
+/api/Contrato/ObtenerContratosActivos
 ```

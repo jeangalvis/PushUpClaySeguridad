@@ -101,4 +101,13 @@ public class ContratoController : BaseApiController
         var lstResultDto = _mapper.Map<List<ContratoDto>>(result.registros);
         return new Pager<ContratoDto>(lstResultDto, result.totalRegistros, resultParams.PageIndex, resultParams.PageSize, resultParams.Search);
     }
+    [HttpGet("ObtenerContratosActivos")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<IEnumerable<ContratosActivosDto>>> Get2()
+    {
+        var results = await _unitOfWork.Contratos
+                                    .ObtenerContratosActivos();
+        return _mapper.Map<List<ContratosActivosDto>>(results);
+    }
 }
